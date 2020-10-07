@@ -1,6 +1,12 @@
 #ifndef _RB_TREES_H_
 #define _RB_TREES_H_
 
+/* Libraries */
+
+#include <stdlib.h>
+
+/* Structs */
+
 /**
  * enum rb_color_e - Possible color of a Red-Black tree
  *
@@ -32,5 +38,9 @@ typedef struct rb_tree_s
 	struct rb_tree_s *left;
 	struct rb_tree_s *right;
 } rb_tree_t;
+
+/* Prototypes */
+
+rb_tree_t *rb_tree_node(rb_tree_t *parent, int value, rb_color_t color);
 
 #endif /* _RB_TREES_H_ */
