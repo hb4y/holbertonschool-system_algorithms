@@ -1,10 +1,10 @@
 #include "rb_trees.h"
 
 /**
- * _rb_tree_is_valid - Check if it is a valid RD tree
+ * is_valid - Check if it is a valid RD tree
  * Every node has a color either red or black.
  * Root of tree is always black.
- * There are no two adjacent red nodes (A red node cannot have a red parent or red child).
+ * There are no two adjacent red nodes.
  * Every path from root to a NULL node has same number of black nodes.
  * @tree: root of tree
  * @_black: count black nodes
@@ -31,7 +31,8 @@ int is_valid(const rb_tree_t *tree, int *_black)
 			return (0);
 	}
 
-	if (!is_valid(tree->left, _black) || !is_valid(tree->right, &_right) || *_black != _right)
+	if (!is_valid(tree->left, _black) || !is_valid(tree->right, &_right) ||
+	    *_black != _right)
 		return (0);
 
 	if (tree->color == BLACK)
