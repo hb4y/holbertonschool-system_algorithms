@@ -7,25 +7,25 @@
  * @aux_v: vertex
  * @func: func to take on vertex
  * @track: keeps track
- * @depth: current depth
+ * @n_depth: current depth
  * Return: depth
  **/
-size_t depth(const vertex_t *aux_v, func_t func, char *track, size_t depth)
+size_t depth(const vertex_t *aux_v, func_t func, char *track, size_t n_depth)
 {
 	edge_t *c_edge;
 	size_t aux_depth, max_d = 0;
 
 	if (track[aux_v->index])
-		return (depth - 1);
+		return (n_depth - 1);
 
-	func(aux_v, depth);
+	func(aux_v, n_depth);
 
 	track[aux_v->index] = 1;
 	c_edge = aux_v->edges;
 
 	while (c_edge)
 	{
-		aux_depth = depth(c_edge->dest, func, track, depth + 1);
+		aux_depth = depth(c_edge->dest, func, track, n_depth + 1);
 
 		if (aux_depth > max_d)
 			max_d = aux_depth;
