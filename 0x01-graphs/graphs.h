@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define visit void (*action)(const vertex_t *v, size_t depth)
+#define visit void (*func)(const vertex_t *v, size_t depth)
 /**
  * enum edge_type_e - Enumerates the different types of
  * connection between two vertices
@@ -79,6 +79,6 @@ size_t breadth_first_traverse(const graph_t *graph, visit);
 
 void graph_display(const graph_t *graph);
 
-typedef void (*action_t)(const vertex_t *, size_t);
+typedef void (*func_t)(const vertex_t *, size_t);
 
 #endif /* _GRAPHS_ */
