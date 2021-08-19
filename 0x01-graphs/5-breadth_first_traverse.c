@@ -23,7 +23,7 @@ size_t breadth_first_traverse(GRAPH, FUNC)
 	track = calloc(graph->nb_vertices, sizeof(char));
 	vertex_aux = calloc(graph->nb_vertices + 1, sizeof(vertex_t *));
 
-	vertex_aux[0] = graph->vertex_aux;
+	vertex_aux[0] = graph->vertices;
 	track[0] = 1, depth = 0, j = 1, size_1 = 1, size_2 = 0;
 
 	for (i = 0; vertex_aux[i]; i++)
