@@ -1,63 +1,61 @@
 #include "pathfinding.h"
 
-static int *wei;
+static int *l;
 
-static vertex_t **org;
-
-#define DUP(mystr) ((s = strdup(mystr)) ? s : (exit(1), NULL))
-
-static vertex_t **corn;
+static vertex_t **orgn;
+static vertex_t **points;
 
 
+#define DUP(x) ((str = strdup(x)) ? str : (exit(1), NULL))
 
 /**
- * dijkstra_graph - Dijkstra
+ * dijkstra_graph - dijkstra
  * @graph: pointer
  * @start: pointer
  * @target: pointer
- * Return: path o null
+ * Return: path
  */
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	vertex_t const *target)
 {
-	ssize_t o, f, k = -1;
-	vertex_t *ver;
-	edge_t *ed;
-	queue_t *res = queue_create();
-	char *s;
+	char *str;
+	ssize_t i, d, j;
+	vertex_t *v;
+	edge_t *e;
+	queue_t *route = queue_create();
 
-	if (!graph || !start || !target || !res)
+	if (!graph || !start || !target || !route)
 		return (NULL);
-	wei = calloc(graph->nb_vertices, sizeof(*wei));
-	org = calloc(graph->nb_vertices, sizeof(*org));
-	corn = calloc(graph->nb_vertices, sizeof(*corn));
-	if (!wei || !org || !corn || !res)
+	l = calloc(graph->nb_vertices, sizeof(*l));
+	orgn = calloc(graph->nb_vertices, sizeof(*orgn));
+	points = calloc(graph->nb_vertices, sizeof(*points));
+	j = -1;
+	if (!l || !orgn || !points || !route)
 		return (NULL);
-	for (ver = graph->vertices; ver; ver = ver->next)
-		corn[ver->index] = ver, wei[ver->index] = INT_MAX;
-	wei[start->index] = 0, org[start->index] = NULL;
-	while (k != (ssize_t)target->index)
+	for (v = graph->vertices; v; v = v->next)
+		points[v->index] = v, l[v->index] = INT_MAX;
+	l[start->index] = 0, orgn[start->index] = NULL;
+	while (j != (ssize_t)target->index)
 	{
-		for (f = INT_MAX, k = -1, o = 0; o < (ssize_t)graph->nb_vertices; o++)
-			if (wei[o] >= 0 && wei[o] < f)
-				f = wei[o], k = o;
-		if (k == -1)
+		for (d = INT_MAX, j = -1, i = 0; i < (ssize_t)graph->nb_vertices; i++)
+			if (l[i] >= 0 && l[i] < d)
+				d = l[i], j = i;
+		if (j == -1)
 			break;
-		printf("Checking %s, distance org %s is %f\n",
-			corn[k]->content, start->content, wei[k]);
-		for (ed = corn[k]->edges; ed; ed = ed->next)
-			if (wei[ed->dest->index] >= 0 &&
-				wei[k] + ed->weight < wei[ed->dest->index])
-				wei[ed->dest->index] = wei[k] + ed->weight,
-					org[ed->dest->index] = corn[k];
-		wei[k] = -1;
+		printf("Checking %s, distance orgn %s is %d\n",
+			points[j]->content, start->content, l[j]);
+		for (e = points[j]->edges; e; e = e->next)
+			if (l[e->dest->index] >= 0 && l[j] + e->weight < l[e->dest->index])
+				l[e->dest->index] = l[j] + e->weight, orgn[e->dest->index] = points[j];
+		l[j] = -1;
 	}
-	if (k != -1)
-		for (queue_push_front(res, DUP(corn[k]->content));
-			k != (ssize_t)start->index; k = org[k]->index)
-			queue_push_front(res, DUP(org[k]->content));
+	if (j != -1)
+		for (queue_push_front(route, DUP(points[j]->content));
+			j != (ssize_t)start->index; j = orgn[j]->index)
+			queue_push_front(route, DUP(orgn[j]->content));
 	else
-		res = (free(res), NULL);
-free(wei), free(org), free(corn);
-return (res);
+		route = (free(route), NULL);
+
+	free(l), free(orgn), free(points);
+	return (route);
 }
