@@ -22,10 +22,10 @@ static vertex_t **points;
 
 /**
  * a_star_graph - uses A* algo to find optimal path
- * @graph: pointer to graph struct
- * @start: pointer to starting vertex
- * @target: pointer to target vertex
- * Return: optimal path queue or NULL
+ * @graph: pointer
+ * @start: pointer
+ * @target: pointeR
+ * Return: path
  */
 queue_t *a_star_graph(graph_t *graph, vertex_t const *start,
 	vertex_t const *target)
