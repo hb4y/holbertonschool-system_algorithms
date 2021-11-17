@@ -42,7 +42,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 				d = l[i], j = i;
 		if (j == -1)
 			break;
-		printf("Checking %s, distance orgn %s is %d\n",
+		printf("Checking %s, distance from %s is %d\n",
 			points[j]->content, start->content, l[j]);
 		for (e = points[j]->edges; e; e = e->next)
 			if (l[e->dest->index] >= 0 && l[j] + e->weight < l[e->dest->index])
