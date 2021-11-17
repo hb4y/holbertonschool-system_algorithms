@@ -6,12 +6,12 @@
  * @b: b
  * Return: max
  */
- int c_max(int a, int b)
- {
+int c_max(int a, int b)
+{
 	if (a > b)
-		return(a);
-	return(b);
- }
+		return (a);
+	return (b);
+}
 
 /**
  * t_d - test diameter
